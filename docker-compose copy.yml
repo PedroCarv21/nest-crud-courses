@@ -1,0 +1,19 @@
+version: '3.9' # Specify the Docker Compose file format version
+services:
+  db:
+    image: mysql:8.0 # Use the official MySQL image, specifying a version
+    container_name: nest_crud_mysql # Optional: Assign a custom name to the container
+    environment:
+      MYSQL_ROOT_PASSWORD: roopassword # Set the root password for MySQL
+      MYSQL_DATABASE: nest_crud # Optional: Create a default database
+      MYSQL_USER: nest # Optional: Create a default user
+      MYSQL_PASSWORD: nest # Optional: Set password for the default user
+    ports:
+      - "3306:3306" # Map host port 3306 to container port 3306
+    volumes:
+      - mysql_data:/var/lib/mysql # Persist data in a named volume
+      # You can also mount a host directory: - ./data/mysql:/var/lib/mysql
+    restart: unless-stopped # Automatically restart the container unless manually stopped
+
+volumes:
+  mysql_data: # Define the named volume for data persistence
