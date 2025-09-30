@@ -1,19 +1,16 @@
 version: '3.9' # Specify the Docker Compose file format version
 services:
   db:
-    image: mysql:8.0 # Use the official MySQL image, specifying a version
-    container_name: nest_crud_mysql # Optional: Assign a custom name to the container
+    image: postgres:16
+    container_name: nest_crud_pg
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: roopassword # Set the root password for MySQL
-      MYSQL_DATABASE: nest_crud # Optional: Create a default database
-      MYSQL_USER: nest # Optional: Create a default user
-      MYSQL_PASSWORD: nest # Optional: Set password for the default user
+      POSTGRES_DB: nest_crud # Nome do banco de dados
+      POSTGRES_USER: nest # Usuário adicional
+      POSTGRES_PASSWORD: nest # Senha do usuário adicional
     ports:
-      - "3306:3306" # Map host port 3306 to container port 3306
+      - "3306:5432" # Mapeando a porta 5432 para acesso ao POSTGRES
     volumes:
-      - mysql_data:/var/lib/mysql # Persist data in a named volume
-      # You can also mount a host directory: - ./data/mysql:/var/lib/mysql
-    restart: unless-stopped # Automatically restart the container unless manually stopped
-
+      - pgdata_data:/var/lib/postgresql/data # Volume persistence para dados do POSTGRES
 volumes:
-  mysql_data: # Define the named volume for data persistence
+  pgdata_data: # Volume para armazenar dados do POSTGRES
